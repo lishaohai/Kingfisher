@@ -63,4 +63,11 @@ class TrojanImageTests: XCTestCase {
         let image = KFCrossPlatformImage(data: fakeData)
         XCTAssertNil(image, "Image should be nil when created from incomplete JPEG data")
     }
+    
+    // Test that image format detection works correctly for malformed data
+    func testFormatDetectionOnMalformedData() {
+        let invalidData = Data([0x00, 0x01, 0x02, 0x03, 0x04])
+        let format = invalidData.kf.imageFormat
+        XCTAssertEqual(format, .unknown, "Format should be unknown for invalid data")
+    }
 }
